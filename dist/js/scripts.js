@@ -39,5 +39,14 @@
         });
     })
 
+    $('#generator').on('click', function(e) {
+        document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="' + 'generateur-universel-langue' + '.html" ></object>';
+        $("#loaded-content").css('width', '100%');
+        $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
+        $("body").toggleClass("sb-sidenav-toggled");
+        $('.collapse').collapse('hide');
+    });
+
+
 
 })(jQuery);
