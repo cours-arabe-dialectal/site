@@ -21,11 +21,23 @@
     });
 
 
-    $('#personnages-bibliques-flashcard').on('click', function(e) {
-        document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="personnages - Flashcards.html" ></object>';
-        $("#loaded-content").css('width', '100%');
-        $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
+    ['personnages-bibliques-flashcards',
+        'couleurs-flashcards',
+        'livres-bibliques-flashcards',
+        "jours-flashcards",
+        "mots-theocratiques-flashcards",
+        "mots-courants-flashcards",
+        "100-mots-flashcards",
+    ].forEach(item => {
 
-    });
+        $('#' + item).on('click', function(e) {
+            document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="' + item + '.html" ></object>';
+            $("#loaded-content").css('width', '100%');
+            $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
+            $("body").toggleClass("sb-sidenav-toggled");
+            $('.collapse').collapse('hide');
+        });
+    })
+
 
 })(jQuery);
