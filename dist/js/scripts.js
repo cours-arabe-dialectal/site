@@ -31,7 +31,10 @@
     ].forEach(item => {
 
         $('#' + item).on('click', function(e) {
-            document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="' + item + '.html" ></object>';
+            document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="flashcards/' + item + '.html" ></object>';
+
+            // $('#flashcard').removeClass('d-none');
+
             $("#loaded-content").css('width', '100%');
             $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
             $("body").toggleClass("sb-sidenav-toggled");

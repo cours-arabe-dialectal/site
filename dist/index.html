@@ -13,6 +13,54 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
+<style>
+    .img-container {
+        position: relative;
+        display: inline-block;
+    }
+    /* .img-container .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgb(255, 255, 255);
+        opacity: 0;
+        transition: opacity 250ms ease-in-out;
+    } */
+    /*.img-container:hover .overlay {
+        opacity: 0.9;
+    } */
+    
+    .overlay .answer-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: rgb(0, 0, 0);
+        width: 100%;
+        height: auto;
+        min-height: 100px;
+        /* background: red; */
+        font-size: 10vw;
+        display: inline;
+    }
+    
+    .overlay .item-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: rgb(0, 0, 0);
+        width: 100%;
+        height: auto;
+        min-height: 100px;
+        /* background: red; */
+        font-size: 10vw;
+        display: inline;
+    }
+</style>
+
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand mr-auto" href="index.html">Cours d'Arabe Dialectal   </a>
@@ -81,7 +129,56 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
+
+                <audio class="d-none" controls="controls" id="audio">
+                        <source src="">
+                    </audio>
+
                 <div class="container-fluid" id="main-content" style="padding-left: 0em;padding-right: 0em">
+
+
+                    <div class="row justify-content-center align-items-center d-none" id="flashcard">
+                        <div class="card text-center w-100" style="width: 18rem;">
+                            <div class="card-header text-center bg-primary">
+                                <div class="card-text" id="theme" style="color:white; font-weight: bolder;"></div>
+                            </div>
+                            <div class="card-body">
+                                <div class="img-container" style="width:100%">
+                                    <img class="card-img" id='image' src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs%3D" alt="Card image">
+                                    <div class="overlay">
+                                        <div class="card-text item-div" id='item'></div>
+                                        <div class="container answer-div d-none">
+                                            <div class="card-text answer" id='answer_ar'></div>
+                                            <div class="card-text answer" id='answer_fr'></div>
+                                        </div>
+                                    </div>
+                                    <div class="card-text" id='item_image' style="font-size: 7vw;font-weight: bold;"></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row justify-content-center align-items-center">
+                                    <div class="col">
+                                        <a class="btn btn-primary" style="width:100%" id='previous'>Précédente</a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-primary" style="width:100%" id='next'>Suivante</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -99,6 +196,7 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+    <script src="js/flashcards.js"></script>
 
 </body>
 
