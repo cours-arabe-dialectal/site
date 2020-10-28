@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+</head>
+
+<style>
+
+</style>
+
+
+<body>
+    <div class="row justify-content-center align-items-center">
+        <div class="card text-center w-100" style="width: 18rem;">
+            <div class="card-header text-center bg-primary">
+                <div class="card-text" id="title" style="color:white; font-weight: bolder;">Générateur Universel de Langue</div>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row justify-content-center align-items-center">
+                        <div class="form-group form-inline justify-content-center align-items-center col-md-auto mb-3" style='width:100%'>
+                            <label class="mr-2" for="theme" style="font-weight: bolder;">Thème : </label>
+                            <select class="form-control mr-2" id="theme">
+                        </select>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="only_pronom" checked>
+                                <label class="form-check-label" for="exampleCheck1">Pronoms seulement</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- <div class="container" style='width:100%;margin-left: 0em;margin-right: 0em;padding-left: 0em;padding-right: 0em;'> -->
+                <div class="row row-flex text-center justify-content-center align-items-center" id="content-fr">
+                </div>
+                <div class="row row-flex text-center justify-content-center align-items-center" id="content-ar">
+                </div>
+                <!-- </div> -->
+                <!-- <div class="row-flex text-center">
+                    <h5 id='phrase'></h5>
+                </div> -->
+            </div>
+            <div class="card-footer">
+                <button type="button" id="generate" class="btn btn-primary">Générer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+
+    <script>
+        document.configuration = {
+            'generator': {
+                'pronom': [],
+                'sujet': [],
+                'verbe': [],
+                'lieu': [],
+                'temps': [],
+                'quipronom': [],
+                'quisujet': [],
+                'quoi': [],
+                'theme': {},
+            },
+        };
+
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        $("#generate").on('click', function(e) {
+            create_sentence($("#theme").val());
+        });
+        $("#theme").on('change', function(e) {
+            create_sentence($("#theme").val());
+        });
+
+        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/3/public/values?alt=json", function(data) {
+
+            var sheetData = data.feed.entry;
+
+            var i;
+            for (i = 0; i < sheetData.length; i++) {
+
+                Object.keys(document.configuration.generator).forEach(key => {
+                    if (key !== 'theme' && key !== 'quoi' && data.feed.entry[i]['gsx$' + key]['$t'].length > 0) {
+                        document.configuration.generator[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
+                    };
+                });
+            };
+        });
+
+        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/4/public/values?alt=json", function(data) {
+
+            var sheetData = data.feed.entry;
+            var i;
+            for (i = 0; i < sheetData.length; i++) {
+
+                let theme = data.feed.entry[i]['gsx$theme']['$t'];
+
+                if (Object.keys(document.configuration.generator['theme']).includes(theme)) {
+
+                    if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
+                        document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
+                    };
+                    if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
+                        document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
+                    };
+                } else {
+                    document.configuration.generator['theme'][theme] = {
+                        'infinitif': [],
+                        'quoi': []
+                    }
+
+                    select = document.getElementById('theme');
+                    var opt = document.createElement('option');
+                    opt.value = theme;
+                    opt.innerHTML = theme;
+                    select.appendChild(opt);
+                    if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
+                        document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
+                    };
+                    if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
+                        document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
+                    };
+                }
+            };
+
+        });
+
+        function create_sentence(theme) {
+            let phrase = '';
+            let html_fr = '';
+            let html_ar = '';
+            let mot = '';
+
+            if (getRandomInt(0, 1) === 0 || $("#only_pronom").prop('checked')) {
+
+                mot = document.configuration.generator['pronom'][getRandomInt(0, document.configuration.generator['pronom'].length - 1)]
+                phrase += mot;
+                phrase += '  ';
+                html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+            } else {
+                mot = document.configuration.generator['sujet'][getRandomInt(0, document.configuration.generator['sujet'].length - 1)]
+                phrase += mot;
+                phrase += '  ';
+                html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+            }
+
+            if (getRandomInt(0, 1) === 0) {
+                mot = document.configuration.generator['verbe'][getRandomInt(0, document.configuration.generator['verbe'].length - 1)]
+                phrase += mot;
+                phrase += '  ';
+                html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+            };
+
+            mot = document.configuration.generator['theme'][theme]['infinitif'][getRandomInt(0, document.configuration.generator['theme'][theme]['infinitif'].length - 1)]
+            phrase += mot;
+            phrase += '  ';
+            html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+            html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+
+            if (theme !== 'Verbes') {
+                if (document.configuration.generator['theme'][theme]['quoi'].length > 0) {
+                    mot = document.configuration.generator['theme'][theme]['quoi'][getRandomInt(0, document.configuration.generator['theme'][theme]['quoi'].length - 1)]
+                    phrase += mot;
+                    phrase += '  ';
+                    html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                    html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+                } else {
+                    mot = document.configuration.generator['lieu'][getRandomInt(0, document.configuration.generator['lieu'].length - 1)]
+                    phrase += mot;
+                    phrase += '  ';
+                    html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                    html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+                };
+
+                mot = document.configuration.generator['temps'][getRandomInt(0, document.configuration.generator['temps'].length - 1)]
+                phrase += mot;
+                phrase += '  ';
+                html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+
+                phrase += 'avec  '
+                html_fr += '<div class="col justify-content-center align-items-center">' + 'avec' + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+
+                if (getRandomInt(0, 1) === 0 || $("#only_pronom").prop('checked')) {
+                    mot = document.configuration.generator['quipronom'][getRandomInt(0, document.configuration.generator['quipronom'].length - 1)]
+                    phrase += mot;
+                    phrase += '  ';
+                    html_fr += '<div class="col justify-content-center align-items-center align-middle">' + mot + '</div>';
+                    html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+                } else {
+                    mot = document.configuration.generator['quisujet'][getRandomInt(0, document.configuration.generator['quisujet'].length - 1)]
+                    phrase += mot;
+                    phrase += '  ';
+                    html_fr += '<div class="col justify-content-center align-items-center align-middle">' + mot + '</div>';
+                    html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+                }
+            };
+
+            $("#content-fr").html(html_fr);
+            // $("#content-ar").html(html_ar);
+            // $("#phrase").text(phrase);
+        };
+    </script>
+
+</body>
+
+</html>
