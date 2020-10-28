@@ -34,11 +34,16 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                             Acceuil
                         </a>
-                        <div class="sb-sidenav-menu-heading">Programme</div>
-                        <div class="sb-sidenav-menu-heading">Matières</div>
+                        <!-- <div class="sb-sidenav-menu-heading">Programme</div>
+                        <div class="sb-sidenav-menu-heading">Matières</div> -->
+                        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                            <div class="sb-nav-link-icon"><i class="fas fa-calendar-week"></i></div>
+                            Programme
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Cours
+                            Matières
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <!-- <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
@@ -94,10 +99,13 @@
                     <div class="container" id="home">
                         <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
                             <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" style="width: 100%;margin-top: 1em;"><span class="fa fa-book-open"></span><br>PROGRAMME</button>
+                                <button class="btn btn-primary btn-lg" id='home-programme' style="width: 100%;margin-top: 1em;"><span class="fa fa-calendar-week"></span><br>PROGRAMME</button>
                             </div>
                             <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" style="width: 100%;margin-top: 1em;"><span class="fa fa-columns"></span><br>FLASHCARDS</button>
+                                <button class="btn btn-primary btn-lg" id='home-matieres' style="width: 100%;margin-top: 1em;"><span class="fa fa-book-open"></span><br>MATIERES</button>
+                            </div>
+                            <div class="col-sm">
+                                <button class="btn btn-primary btn-lg" id='home-flashcards' style="width: 100%;margin-top: 1em;"><span class="fa fa-columns"></span><br>FLASHCARDS</button>
                             </div>
                             <div class="col-sm">
                                 <button class="btn btn-primary btn-lg" id='home-generator' style="width: 100%;margin-top: 1em;"><span class="fa fa-globe"></span><br>GENERATEUR UNIVERSEL</button>
