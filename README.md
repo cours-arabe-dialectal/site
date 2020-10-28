@@ -1,2 +1,2 @@
 # cours-arabe-
-Site internet :  https://thierry-sammour.github.io/cours-arabe-dialectal/
+Site internet :  https://cours-arabe-dialectal.github.io/site/
