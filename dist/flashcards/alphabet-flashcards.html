@@ -61,7 +61,7 @@
                         <div class="overlay">
                             <div class="card-text item-div" id='item'></div>
                             <div class="container answer-div d-none">
-                                <div class="card-text answer" id='answer_ar'></div>
+                                <!-- <div class="card-text answer" id='answer_ar'></div> -->
                                 <div class="card-text answer" id='answer_fr'></div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
         <script>
             document.configuration = {
                 'flashcard': {
-                    'title': 'Mots Courants',
+                    'title': 'Alphabet',
                     'data': {
                         'francais': [],
                         'phonetique': [],
@@ -160,9 +160,9 @@
                     'deck_size': 0,
                     'has_image': false,
                     'has_audio': false,
-                    'image_folder': '../assets/mots_courants/image/',
-                    'audio_folder': '../assets/mots_courants/audio/',
-                    'file_number': 7,
+                    'image_folder': '../assets/alphabet/image/',
+                    'audio_folder': '../assets/alphabet/audio/',
+                    'file_number': 11,
                     'image_extension': '.png',
                     'display_subtitle': true,
                     'play_audio': true,
@@ -278,16 +278,21 @@
 
             function create_card() {
                 $('#image').css('opacity', 0);
-                $('#item_image').css('color', 'black');
-                $('#item_image').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
+                // $('#item_image').css('color', 'black');
+                // $('#item_image').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
                 $('#item').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
-                $('#answer_fr').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][1]);
-                $('#answer_ar').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2]);
+                $('#answer_fr').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
+
+                // $('#answer_ar').html(
+                //     document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2]
+                // );
+
+
                 $('#item').addClass('d-none');
                 let dims = calculateAspectRatioFit($('#image').width(), $('#image').height(), $(".card-body").width(), $(".card-body").width())
                 $('#image').css('width', dims.width).css('height', dims.height);
 
-                let path_image = document.configuration.flashcard.image_folder + document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0] + document.configuration.flashcard.image_extension;
+                let path_image = document.configuration.flashcard.image_folder + document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2] + document.configuration.flashcard.image_extension;
                 let myImage = document.getElementById('image');
                 myImage.src = path_image;
 
@@ -317,7 +322,7 @@
                 };
 
                 document.configuration.flashcard.has_audio = true;
-                let path_audio = document.configuration.flashcard.audio_folder + document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0] + '.mp3';
+                let path_audio = document.configuration.flashcard.audio_folder + document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2] + '.mp3';
                 let myAudio = document.getElementById('audio');
                 myAudio.src = path_audio;
                 myAudio.onerror = function() {

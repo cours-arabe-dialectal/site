@@ -147,7 +147,7 @@
         <script>
             document.configuration = {
                 'flashcard': {
-                    'title': 'Mots Courants',
+                    'title': 'Chiffres',
                     'data': {
                         'francais': [],
                         'phonetique': [],
@@ -160,9 +160,9 @@
                     'deck_size': 0,
                     'has_image': false,
                     'has_audio': false,
-                    'image_folder': '../assets/mots_courants/image/',
-                    'audio_folder': '../assets/mots_courants/audio/',
-                    'file_number': 7,
+                    'image_folder': '../assets/chiffres/image/',
+                    'audio_folder': '../assets/chiffres/audio/',
+                    'file_number': 2,
                     'image_extension': '.png',
                     'display_subtitle': true,
                     'play_audio': true,
@@ -282,7 +282,9 @@
                 $('#item_image').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
                 $('#item').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
                 $('#answer_fr').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][1]);
-                $('#answer_ar').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2]);
+                $('#answer_ar').html(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][3] + '<br>' +
+                    document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2]
+                );
                 $('#item').addClass('d-none');
                 let dims = calculateAspectRatioFit($('#image').width(), $('#image').height(), $(".card-body").width(), $(".card-body").width())
                 $('#image').css('width', dims.width).css('height', dims.height);

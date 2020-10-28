@@ -28,6 +28,8 @@
         "mots-theocratiques-flashcards",
         "mots-courants-flashcards",
         "100-mots-flashcards",
+        "alphabet-flashcards",
+        "chiffres-flashcards",
     ].forEach(item => {
 
         $('#' + item).on('click', function(e) {
