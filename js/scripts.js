@@ -71,8 +71,10 @@
 
     // toggle content
     $('.home').on('click', function(e) {
-        $("#home").addClass('d-none');
-        $("#" + e.currentTarget.id.substring(0, e.currentTarget.id.length - 7)).removeClass('d-none');
+        if (e.currentTarget.id.substring(0, e.currentTarget.id.length - 7) !== "home-generator") {
+            $("#home").addClass('d-none');
+            $("#" + e.currentTarget.id.substring(0, e.currentTarget.id.length - 7)).removeClass('d-none');
+        };
     });
 
 
