@@ -51,7 +51,7 @@
     })
 
     // load generator
-    $('#generator,#home-generator').on('click', function(e) {
+    $('#generator,#home-generator-button').on('click', function(e) {
         document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="generator/' + 'generateur-universel-langue' + '.html" ></object>';
         $("#loaded-content").css('width', '100%');
         $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
