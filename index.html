@@ -13,12 +13,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 
-<style>
-    .img-container {
-        position: relative;
-        display: inline-block;
-    }
-</style>
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -34,8 +28,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                             Acceuil
                         </a>
-                        <!-- <div class="sb-sidenav-menu-heading">Programme</div>
-                        <div class="sb-sidenav-menu-heading">Matières</div> -->
+                        <!-- <div class="sb-sidenav-menu-heading">Programme</div> -->
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-calendar-week"></i></div>
                             Programme
@@ -46,22 +39,6 @@
                             Matières
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <!-- <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                        Lecture
-                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                    </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-
-                            </nav>
-                        </div> -->
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Flashcards
@@ -79,7 +56,6 @@
                                 <a class="nav-link" id="mots-theocratiques-flashcards">Mots Théocratiques</a>
                                 <a class="nav-link" id="personnages-bibliques-flashcards">Personnages Bibliques</a>
                                 <a class="nav-link" id="questions-conversation-flashcards">Questions Conversations</a>
-                                <!-- <a class="nav-link" href="layout-sidenav-light.html">Verbes</a> -->
                             </nav>
                         </div>
                         <a class="nav-link" id="generator">
@@ -94,26 +70,34 @@
         </div>
         <div id="layoutSidenav_content">
             <main>
-
                 <div class="container-fluid" id="main-content" style="padding-left: 0em;padding-right: 0em">
+
                     <div class="container" id="home">
                         <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
-                            <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" id='home-programme' style="width: 100%;margin-top: 1em;"><span class="fa fa-calendar-week"></span><br>PROGRAMME</button>
-                            </div>
-                            <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" id='home-matieres' style="width: 100%;margin-top: 1em;"><span class="fa fa-book-open"></span><br>MATIERES</button>
-                            </div>
-                            <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" id='home-flashcards' style="width: 100%;margin-top: 1em;"><span class="fa fa-columns"></span><br>FLASHCARDS</button>
-                            </div>
-                            <div class="col-sm">
-                                <button class="btn btn-primary btn-lg" id='home-generator' style="width: 100%;margin-top: 1em;"><span class="fa fa-globe"></span><br>GENERATEUR UNIVERSEL</button>
-                            </div>
+                            <button class="btn btn-primary btn-lg home" id='home-programme-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-calendar-week"></span><br>PROGRAMME</button>
+                            <button class="btn btn-primary btn-lg home" id='home-matieres-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-book-open"></span><br>MATIERES</button>
+                            <button class="btn btn-primary btn-lg home" id='home-flashcards-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-columns"></span><br>FLASHCARDS</button>
+                            <button class="btn btn-primary btn-lg home" id='home-generator-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-globe"></span><br>GENERATEUR UNIVERSEL</button>
                         </div>
                     </div>
-                </div>
+                    <div class="container d-none" id="home-flashcards">
+                        <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
+                            <button class="btn btn-primary btn-lg menu" id='alphabet-flashcards-menu' style="width: 100%;margin-top: 1em;">Alphabet</button>
+                            <button class="btn btn-primary btn-lg menu" id='chiffres-flashcards-menu' style="width: 100%;margin-top: 1em;">Chiffres</button>
+                            <button class="btn btn-primary btn-lg menu" id='couleurs-flashcards-menu' style="width: 100%;margin-top: 1em;">Couleurs</button>
+                            <button class="btn btn-primary btn-lg menu" id='jours-flashcards-menu' style="width: 100%;margin-top: 1em;">Jours de la Semaine</button>
+                            <button class="btn btn-primary btn-lg menu" id='livres-bibliques-flashcards-menu' style="width: 100%;margin-top: 1em;">Livres de la Bible</button>
+                            <button class="btn btn-primary btn-lg menu" id='100-mots-flashcards-menu' style="width: 100%;margin-top: 1em;">100 Mots</button>
+                            <button class="btn btn-primary btn-lg menu" id='mots-courants-flashcards-menu' style="width: 100%;margin-top: 1em;">Mots Courants</button>
+                            <button class="btn btn-primary btn-lg menu" id='mots-theocratiques-flashcards-menu' style="width: 100%;margin-top: 1em;">Mots Théocratiques</button>
+                            <button class="btn btn-primary btn-lg menu" id='personnages-bibliques-flashcards-menu' style="width: 100%;margin-top: 1em;">Personnages Bibliques</button>
+                            <button class="btn btn-primary btn-lg menu" id='questions-conversation-flashcards-menu' style="width: 100%;margin-top: 1em;">Questions Conversations</button>
+                        </div>
+                    </div>
 
+
+
+                </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
                 <div class="container-fluid">
@@ -130,7 +114,6 @@
     <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
-
 </body>
 
 </html>
