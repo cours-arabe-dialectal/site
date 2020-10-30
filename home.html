@@ -16,7 +16,7 @@
 
 <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-        <a class="navbar-brand mr-auto" href="index.html">Cours d'Arabe Dialectal   </a>
+        <a class="navbar-brand mr-auto" href="home.html">Cours d'Arabe Dialectal   </a>
         <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button>
     </nav>
     <div id="layoutSidenav">
@@ -39,6 +39,11 @@
                             Matières
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
+                        <div class="collapse" id="collapsePages" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" id="home-grammaire">Grammaire</a>
+                            </nav>
+                        </div>
                         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Flashcards
@@ -56,7 +61,7 @@
                                 <a class="nav-link" id="mots-theocratiques-flashcards">Mots Théocratiques</a>
                                 <a class="nav-link" id="personnages-bibliques-flashcards">Personnages Bibliques</a>
                                 <a class="nav-link" id="questions-conversation-flashcards">Questions Conversations</a>
-                                <a class="nav-link" id="verbes-flashcards">Verbes Courants</a>
+                                <a class="nav-link" id="verbes-courants-flashcards">Verbes Courants</a>
                             </nav>
                         </div>
                         <a class="nav-link" id="generator">
@@ -73,7 +78,7 @@
             <main>
                 <div class="container-fluid" id="main-content" style="padding-left: 0em;padding-right: 0em">
 
-                    <div class="container" id="home">
+                    <div class="container main" id="home">
                         <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
                             <button class="btn btn-primary btn-lg home" id='home-programme-button' style="width: 100%;margin-top: 1em;" disabled><span class="fa fa-calendar-week"></span><br>PROGRAMME</button>
                             <button class="btn btn-primary btn-lg home" id='home-matieres-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-book-open"></span><br>MATIERES</button>
@@ -81,7 +86,8 @@
                             <button class="btn btn-primary btn-lg home" id='home-generator-button' style="width: 100%;margin-top: 1em;"><span class="fa fa-globe"></span><br>GENERATEUR UNIVERSEL</button>
                         </div>
                     </div>
-                    <div class="container d-none" id="home-flashcards">
+
+                    <div class="container main d-none" id="home-flashcards">
                         <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
                             <button class="btn btn-primary btn-lg menu" id='alphabet-flashcards-menu' style="width: 100%;margin-top: 1em;">Alphabet</button>
                             <button class="btn btn-primary btn-lg menu" id='chiffres-flashcards-menu' style="width: 100%;margin-top: 1em;">Chiffres</button>
@@ -98,6 +104,23 @@
                     </div>
 
 
+
+                    <!-- MATIERES -->
+                    <div class="container main d-none" id="home-matieres">
+                        <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
+                            <button class="btn btn-primary btn-lg menu matieres" id='matieres-lecture' style="width: 100%;margin-top: 1em;">Lecture</button>
+                            <button class="btn btn-primary btn-lg menu matieres" id='matieres-conjugaison' style="width: 100%;margin-top: 1em;">Conjugaison</button>
+                            <button class="btn btn-primary btn-lg menu matieres" id='matieres-grammaire' style="width: 100%;margin-top: 1em;">Grammaire</button>
+                            <button class="btn btn-primary btn-lg menu matieres" id='matieres-vocabulaire' style="width: 100%;margin-top: 1em;">Vocabulaire</button>
+                        </div>
+                    </div>
+
+                    <!-- GRAMMAIRE -->
+                    <div class="container main d-none" id="matieres-grammaire-page">
+                        <div class="btn-group-justified" style="width: 100%;margin-left: 0%;">
+                            <button class="btn btn-primary btn-lg menu" id='grammaire-negation' style="width: 100%;margin-top: 1em;">Négation</button>
+                        </div>
+                    </div>
 
                 </div>
             </main>
