@@ -36,6 +36,8 @@
         "alphabet-flashcards-menu",
         "chiffres-flashcards-menu",
         "questions-conversation-flashcards-menu",
+        "verbes-courants-flashcards",
+        "verbes-courants-flashcards-menu",
     ].forEach(item => {
         $('#' + item).on('click', function(e) {
             if (Object.values(e.currentTarget.classList).includes('menu')) {
@@ -78,4 +80,12 @@
     });
 
 
+    $("#button").on('click', function(e) {
+        if (CryptoJS.SHA256($("#inputPassword").val()).toString() === "7152d7f380b2c8454487274a701fbad3fa1a11f463501c08829990868554294d") {
+            window.open("index.html", "_self");
+            return false;
+        } else {
+            alert('Le mot de passe est incorrect. Veuillez réessayer.')
+        }
+    });
 })(jQuery);
