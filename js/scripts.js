@@ -81,8 +81,8 @@
 
 
     $("#button").on('click', function(e) {
-        if (CryptoJS.SHA256($("#inputPassword").val()).toString() === "7152d7f380b2c8454487274a701fbad3fa1a11f463501c08829990868554294d") {
-            window.open("_index.html", "_self");
+        if (CryptoJS.SHA256($("#inputPassword").val()).toString() === "cce66316b4c1c59df94a35afb80cecd82d1a8d91b554022557e115f5c275f515") {
+            window.open("home.html", "_self");
             return false;
         } else {
             alert('Le mot de passe est incorrect. Veuillez réessayer.')
