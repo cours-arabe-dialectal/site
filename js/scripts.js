@@ -85,12 +85,6 @@
         $("#" + e.currentTarget.id).removeClass('d-none');
     });
 
-    // $('.matieres').on('click', function(e) {
-    //     $(".home,.main").addClass('d-none');
-    //     $("#" + e.currentTarget.id + '-page').removeClass('d-none');
-    //     e.preventDefault();
-    // });
-
     $("#button").on('click', function(e) {
         if (CryptoJS.SHA256($("#inputPassword").val()).toString() === "cce66316b4c1c59df94a35afb80cecd82d1a8d91b554022557e115f5c275f515") {
             window.open("home.html", "_self");
