@@ -28,6 +28,10 @@
                         <div class="form-group form-inline justify-content-center align-items-center col-md-auto mb-3" style='width:100%'>
                             <label class="mr-2" for="theme" style="font-weight: bolder;">Thème : </label>
                             <select class="form-control mr-2" id="theme">
+                                <optgroup label="Verbes">
+                                <option>Verbes - Accompli</option>
+                                <option>Verbes - Inaccompli</option>
+                                </optgroup>
                         </select>
                             <div class="form-check d-none">
                                 <input type="checkbox" class="form-check-input" id="only_pronom" checked>
@@ -70,6 +74,21 @@
                 'quoi': [],
                 'theme': {},
             },
+            'verbes': {
+                'francais': [],
+                'accompliphonetique': [],
+                'accompli': [],
+                'inaccompliphonetique': [],
+                'inaccompli': [],
+                'categorie': [],
+            },
+            'dictionnaire': {
+                'francais': [],
+                'arabe': [],
+                'phonetique': [],
+                'categorie': [],
+                'souscategorie': [],
+            },
         };
 
         function getRandomInt(min, max) {
@@ -79,64 +98,100 @@
         }
 
         $("#generate").on('click', function(e) {
-            create_sentence($("#theme").val());
+            if ($("#theme").val() === "Verbes - Accompli") {
+                create_verbes('accompli');
+            } else if ($("#theme").val() === "Verbes - Inaccompli") {
+                create_verbes('inaccompli');
+            } else {
+                create_sentence($("#theme").val());
+            };
         });
         $("#theme").on('change', function(e) {
-            create_sentence($("#theme").val());
+            if ($("#theme").val() === "Verbes - Accompli") {
+                create_verbes('accompli');
+            } else if ($("#theme").val() === "Verbes - Inaccompli") {
+                create_verbes('inaccompli');
+            } else {
+                create_sentence($("#theme").val());
+            };
         });
 
-        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/3/public/values?alt=json", function(data) {
 
+        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/15/public/values?alt=json", function(data) {
             var sheetData = data.feed.entry;
-
             var i;
             for (i = 0; i < sheetData.length; i++) {
-
-                Object.keys(document.configuration.generator).forEach(key => {
-                    if (key !== 'theme' && key !== 'quoi' && data.feed.entry[i]['gsx$' + key]['$t'].length > 0) {
-                        document.configuration.generator[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
-                    };
+                let array = [];
+                Object.keys(document.configuration.verbes).forEach(key => {
+                    document.configuration.verbes[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
+                    array.push(data.feed.entry[i]['gsx$' + key]['$t']);
                 });
             };
         });
 
-        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/4/public/values?alt=json", function(data) {
-
+        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/16/public/values?alt=json", function(data) {
             var sheetData = data.feed.entry;
             var i;
             for (i = 0; i < sheetData.length; i++) {
+                let array = [];
+                Object.keys(document.configuration.dictionnaire).forEach(key => {
+                    document.configuration.dictionnaire[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
+                    array.push(data.feed.entry[i]['gsx$' + key]['$t']);
+                });
+            };
+        });
 
-                let theme = data.feed.entry[i]['gsx$theme']['$t'];
 
-                if (Object.keys(document.configuration.generator['theme']).includes(theme)) {
+        function filter(data, col, item) {
+            return data[col].reduce((r, n, i) => {
+                n === item && r.push(i);
+                return r;
+            }, []);
+        }
 
-                    if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
-                        document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
-                    };
-                    if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
-                        document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
-                    };
-                } else {
-                    document.configuration.generator['theme'][theme] = {
-                        'infinitif': [],
-                        'quoi': []
-                    }
+        function create_verbes(type) {
 
-                    select = document.getElementById('theme');
-                    var opt = document.createElement('option');
-                    opt.value = theme;
-                    opt.innerHTML = theme;
-                    select.appendChild(opt);
-                    if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
-                        document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
-                    };
-                    if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
-                        document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
-                    };
-                }
+            let phrase = '';
+            let html_fr = '';
+            let html_ar = '';
+            let mot = '';
+            let indexes = 0;
+            let index = 0;
+
+            // pronom
+            indexes = filter(document.configuration.dictionnaire, 'categorie', 'pronom_personnel')
+            index = indexes[getRandomInt(0, indexes.length - 1)];
+            mot = document.configuration.dictionnaire['francais'][index];
+            phrase += mot;
+            phrase += '  ';
+            html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+            html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.dictionnaire['arabe'][index] + '</div>';
+
+            // verbe base
+            if (getRandomInt(0, 1) === 0) {
+                indexes = filter(document.configuration.verbes, 'categorie', 'base')
+                index = indexes[getRandomInt(0, indexes.length - 1)];
+                mot = document.configuration.verbes['francais'][index];
+                phrase += mot;
+                phrase += '  ';
+                html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+                html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.verbes[type][index] + '</div>';
             };
 
-        });
+            // verbe
+            indexes = filter(document.configuration.verbes, 'categorie', 'geste')
+            index = indexes[getRandomInt(0, indexes.length - 1)];
+            mot = document.configuration.verbes['francais'][index];
+            phrase += mot;
+            phrase += '  ';
+            html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+            html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.verbes[type][index] + '</div>';
+
+
+            $("#content-fr").html(html_fr);
+            $("#content-ar").html(html_ar);
+        };
+
 
         function create_sentence(theme) {
             let phrase = '';
@@ -172,6 +227,8 @@
             phrase += '  ';
             html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
             html_ar += '<div class="col justify-content-center align-items-center">' + 'صفر' + '</div>';
+
+
 
             if (theme !== 'Verbes') {
                 if (document.configuration.generator['theme'][theme]['quoi'].length > 0) {
@@ -213,10 +270,67 @@
                 }
             };
 
+
+
+
+
             $("#content-fr").html(html_fr);
-            // $("#content-ar").html(html_ar);
+            $("#content-ar").html(html_ar);
             // $("#phrase").text(phrase);
         };
+
+        // $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/3/public/values?alt=json", function(data) {
+
+        //     var sheetData = data.feed.entry;
+
+        //     var i;
+        //     for (i = 0; i < sheetData.length; i++) {
+
+        //         Object.keys(document.configuration.generator).forEach(key => {
+        //             if (key !== 'theme' && key !== 'quoi' && data.feed.entry[i]['gsx$' + key]['$t'].length > 0) {
+        //                 document.configuration.generator[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
+        //             };
+        //         });
+        //     };
+        // });
+
+        // $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/4/public/values?alt=json", function(data) {
+
+        //     var sheetData = data.feed.entry;
+        //     var i;
+        //     for (i = 0; i < sheetData.length; i++) {
+
+        //         let theme = data.feed.entry[i]['gsx$theme']['$t'];
+
+        //         if (Object.keys(document.configuration.generator['theme']).includes(theme)) {
+
+        //             if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
+        //                 document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
+        //             };
+        //             if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
+        //                 document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
+        //             };
+        //         } else {
+        //             document.configuration.generator['theme'][theme] = {
+        //                 'infinitif': [],
+        //                 'quoi': []
+        //             }
+
+        //             select = document.getElementById('theme');
+        //             var opt = document.createElement('option');
+        //             opt.value = theme;
+        //             opt.innerHTML = theme;
+        //             select.appendChild(opt);
+        //             if (data.feed.entry[i]['gsx$infinitif']['$t'].length > 0) {
+        //                 document.configuration.generator['theme'][theme]['infinitif'].push(data.feed.entry[i]['gsx$infinitif']['$t']);
+        //             };
+        //             if (data.feed.entry[i]['gsx$quoi']['$t'].length > 0) {
+        //                 document.configuration.generator['theme'][theme]['quoi'].push(data.feed.entry[i]['gsx$quoi']['$t']);
+        //             };
+        //         }
+        //     };
+
+        // });
     </script>
 
 </body>
