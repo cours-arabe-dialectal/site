@@ -52,6 +52,7 @@
             </div>
             <div class="card-footer">
                 <button type="button" id="generate" class="btn btn-primary">Générer</button>
+                <button type="button" id="solution" class="btn btn-secondary">Solution</button>
             </div>
         </div>
     </div>
@@ -98,6 +99,11 @@
         }
 
         $("#generate").on('click', function(e) {
+            $("#content-ar").addClass('d-none');
+            $("#solution").removeClass('btn-success');
+            $("#solution").addClass('btn-secondary');
+            $("#content-ar").addClass('d-none');
+
             if ($("#theme").val() === "Verbes - Accompli") {
                 create_verbes('accompli');
             } else if ($("#theme").val() === "Verbes - Inaccompli") {
@@ -107,6 +113,11 @@
             };
         });
         $("#theme").on('change', function(e) {
+            $("#content-ar").addClass('d-none');
+            $("#solution").removeClass('btn-success');
+            $("#solution").addClass('btn-secondary');
+            $("#content-ar").addClass('d-none');
+
             if ($("#theme").val() === "Verbes - Accompli") {
                 create_verbes('accompli');
             } else if ($("#theme").val() === "Verbes - Inaccompli") {
@@ -115,7 +126,17 @@
                 create_sentence($("#theme").val());
             };
         });
-
+        $("#solution").on('click', function(e) {
+            if ($("#solution").hasClass('btn-secondary')) {
+                $("#solution").removeClass('btn-secondary');
+                $("#solution").addClass('btn-success');
+                $("#content-ar").removeClass('d-none');
+            } else {
+                $("#solution").removeClass('btn-success');
+                $("#solution").addClass('btn-secondary');
+                $("#content-ar").addClass('d-none');
+            };
+        });
 
         $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/15/public/values?alt=json", function(data) {
             var sheetData = data.feed.entry;
