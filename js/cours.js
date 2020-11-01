@@ -11,15 +11,26 @@
 
     //load cours
 
-    ["matieres-lecture",
-    "matieres-conjugaison",
-    "matieres-grammaire",
-    "matieres-vocabulaire",
-    "matieres-lecture-menu",
-    "matieres-conjugaison-menu",
-    "matieres-grammaire-menu",
-    "matieres-vocabulaire-menu",
+    ["lecture",
+    "conjugaison",
+    "grammaire",
+    "vocabulaire",
+    "lecture-menu",
+    "conjugaison-menu",
+    "grammaire-menu",
+    "vocabulaire-menu",
+    ].forEach(item => {
+        $('#' + item).on('click', function(e) {
+            if (Object.values(e.currentTarget.classList).includes('menu')) {
+                item = item.substring(0, item.length - 5);
+            };
+            document.getElementById("main-content").innerHTML = '<object id="loaded-content" type="text/html" data="cours/' + item + '.html" ></object>';
+            $("#loaded-content").css('width', '100%');
+            $("#loaded-content").css('height', $("#layoutSidenav_content").height() + 'px');
+            $("body").toggleClass("sb-sidenav-toggled");
+            $('.collapse').collapse('hide');
 
-    ]
+        });
+    })
 
 })(jQuery);
