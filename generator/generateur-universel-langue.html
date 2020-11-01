@@ -32,6 +32,9 @@
                                 <option>Verbes - Inaccompli</option>
                                 <option>Verbes - Accompli</option>
                                 </optgroup>
+                                <optgroup label="Possessifs">
+                                    <option>Possessifs</option>
+                                    </optgroup>
                         </select>
                             <div class="form-check d-none">
                                 <input type="checkbox" class="form-check-input" id="only_pronom" checked>
@@ -108,9 +111,12 @@
                 create_verbes('accompli');
             } else if ($("#theme").val() === "Verbes - Inaccompli") {
                 create_verbes('inaccompli');
+            } else if ($("#theme").val() === "Possessifs") {
+                create_possessifs('inaccompli');
             } else {
                 create_sentence($("#theme").val());
             };
+
         });
         $("#theme").on('change', function(e) {
             $("#content-ar").addClass('d-none');
@@ -122,9 +128,12 @@
                 create_verbes('accompli');
             } else if ($("#theme").val() === "Verbes - Inaccompli") {
                 create_verbes('inaccompli');
+            } else if ($("#theme").val() === "Possessifs") {
+                create_possessifs('inaccompli');
             } else {
                 create_sentence($("#theme").val());
             };
+
         });
         $("#solution").on('click', function(e) {
             if ($("#solution").hasClass('btn-secondary')) {
@@ -163,9 +172,9 @@
         });
 
 
-        function filter(data, col, item) {
+        function filter(data, col, items) {
             return data[col].reduce((r, n, i) => {
-                n === item && r.push(i);
+                items.includes(n) && r.push(i);
                 return r;
             }, []);
         }
@@ -180,7 +189,7 @@
             let index = 0;
 
             // pronom
-            indexes = filter(document.configuration.dictionnaire, 'categorie', 'pronom_personnel')
+            indexes = filter(document.configuration.dictionnaire, 'categorie', ['pronom_personnel'])
             index = indexes[getRandomInt(0, indexes.length - 1)];
             mot = document.configuration.dictionnaire['francais'][index];
             phrase += mot;
@@ -190,7 +199,7 @@
 
             // verbe base
             if (getRandomInt(0, 1) === 0) {
-                indexes = filter(document.configuration.verbes, 'categorie', 'base')
+                indexes = filter(document.configuration.verbes, 'categorie', ['base'])
                 index = indexes[getRandomInt(0, indexes.length - 1)];
                 mot = document.configuration.verbes['francais'][index];
                 phrase += mot;
@@ -200,13 +209,50 @@
             };
 
             // verbe
-            indexes = filter(document.configuration.verbes, 'categorie', 'geste')
+            indexes = filter(document.configuration.verbes, 'categorie', ['geste'])
             index = indexes[getRandomInt(0, indexes.length - 1)];
             mot = document.configuration.verbes['francais'][index];
             phrase += mot;
             phrase += '  ';
             html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
             html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.verbes[type][index] + '</div>';
+
+
+            $("#content-fr").html(html_fr);
+            $("#content-ar").html(html_ar);
+        };
+
+        function create_possessifs(type) {
+
+            let phrase = '';
+            let html_fr = '';
+            let html_ar = '';
+            let mot = '';
+            let indexes = 0;
+            let index = 0;
+
+
+
+            // objet
+            indexes = filter(document.configuration.dictionnaire, 'souscategorie', ['objet', 'personne'])
+            index = indexes[getRandomInt(0, indexes.length - 1)];
+            mot = document.configuration.dictionnaire['francais'][index];
+            phrase += mot;
+            phrase += '  ';
+            html_fr += '<div class="col justify-content-center align-items-center">' + mot + '</div>';
+            html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.dictionnaire['arabe'][index] + '</div>';
+
+
+
+            // pronom
+            indexes = filter(document.configuration.dictionnaire, 'categorie', ['pronom_tonique'])
+            index = indexes[getRandomInt(0, indexes.length - 1)];
+            mot = document.configuration.dictionnaire['francais'][index];
+            phrase += mot;
+            phrase += '  ';
+            html_fr += '<div class="col justify-content-center align-items-center"> à ' + mot + '</div>';
+            html_ar += '<div class="col justify-content-center align-items-center">' + document.configuration.dictionnaire['arabe'][index] + '</div>';
+
 
 
             $("#content-fr").html(html_fr);
