@@ -116,6 +116,15 @@
                                 <input type="number" class="form-control" id="interval_time" value="3" min="1" max="60">
                             </div>
                             <div class="form-check">
+                                <input type="checkbox" class="form-check-input settings" id="display_inaccompli" checked>
+                                <label class="form-check-label" for="exampleCheck1">Inaccompli (Présent)</label>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input settings" id="display_accompli" checked>
+                                <label class="form-check-label" for="exampleCheck1">Accompli (Passé)</label>
+                            </div>
+
+                            <div class="form-check">
                                 <input type="checkbox" class="form-check-input settings" id="play_audio" checked>
                                 <label class="form-check-label" for="exampleCheck1">Jouer l'audio si disponible</label>
                             </div>
@@ -169,6 +178,8 @@
                     'play_audio': true,
                     'random': false,
                     'display_phonetique': true,
+                    'display_accompli': true,
+                    'display_inaccompli': true,
                     'fr_to_ar': true,
                 },
             };
@@ -226,7 +237,7 @@
                         } else {
                             $('#answer_fr').addClass('d-none');
                         };
-                    };
+                    }
                 };
             });
 
@@ -283,12 +294,28 @@
                 $('#item_image').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
                 $('#item').text(document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][0]);
 
-                let textfr = document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][1] + '<br>';
-                textfr += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][3];
+                let textfr = '';
+                if (document.configuration.flashcard.display_accompli) {
+                    textfr += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][1];
+                }
+                if (document.configuration.flashcard.display_accompli && document.configuration.flashcard.display_inaccompli) {
+                    textfr += ' / ';
+                };
+                if (document.configuration.flashcard.display_inaccompli) {
+                    textfr += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][3];
+                }
                 $('#answer_fr').html(textfr);
 
-                let text = document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2] + '<br>';
-                text += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][4];
+                let text = '';
+                if (document.configuration.flashcard.display_accompli) {
+                    text += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][2];
+                }
+                if (document.configuration.flashcard.display_accompli && document.configuration.flashcard.display_inaccompli) {
+                    text += ' / ';
+                };
+                if (document.configuration.flashcard.display_inaccompli) {
+                    text += document.configuration.flashcard.dataset[document.configuration.flashcard.current_id][4];
+                }
                 $('#answer_ar').html(text);
 
 
