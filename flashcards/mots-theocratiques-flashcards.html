@@ -229,26 +229,27 @@
                 };
             });
 
-            $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/" +
-                document.configuration.flashcard.file_number + "/public/values?alt=json",
-                function(data) {
-                    var sheetData = data.feed.entry;
-                    var i;
-                    document.configuration.flashcard.dataset = [];
-                    document.configuration.flashcard.current_id = 0;
-                    document.configuration.flashcard.deck_size = sheetData.length;
+            var url = 'https://sheets.googleapis.com/v4/spreadsheets/' +
+           '1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ' + '/values/' + 'mots théocratiques' +
+           '?alt=json&key=' + 'AIzaSyDabdJQv6avvQu45x_npIjjx16JooFdkaA';
 
-                    for (i = 0; i < sheetData.length; i++) {
-                        let array = [];
-                        Object.keys(document.configuration.flashcard.data).forEach(key => {
-                            document.configuration.flashcard.data[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
-                            array.push(data.feed.entry[i]['gsx$' + key]['$t']);
-                        });
-                        document.configuration.flashcard.dataset.push(array);
-                    };
-                    $("#theme").text(document.configuration.flashcard.title);
-                    create_card();
-                });
+            $.getJSON(url, function(data) {
+
+                let header = data.values[0]
+                document.configuration.flashcard.dataset = data.values.slice(1);
+                document.configuration.flashcard.current_id = 0;
+                document.configuration.flashcard.deck_size = document.configuration.flashcard.dataset.length;
+
+                for (i = 0; i < document.configuration.flashcard.dataset.length; i++) {
+
+                    Object.keys(document.configuration.flashcard.data).forEach(key => {
+                        document.configuration.flashcard.data[key].push(document.configuration.flashcard.dataset[i][header.indexOf(key)]);
+                    });
+                };
+                $("#theme").text(document.configuration.flashcard.title);
+                create_card();
+            });
+            
 
             $("#next").on('click', function(e) {
                 if (document.configuration.flashcard.random) {

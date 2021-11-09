@@ -147,29 +147,39 @@
             };
         });
 
-        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/15/public/values?alt=json", function(data) {
-            var sheetData = data.feed.entry;
-            var i;
-            for (i = 0; i < sheetData.length; i++) {
-                let array = [];
+
+
+        var url = 'https://sheets.googleapis.com/v4/spreadsheets/' +
+        '1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ' + '/values/' + 'Verbes' +
+        '?alt=json&key=' + 'AIzaSyDabdJQv6avvQu45x_npIjjx16JooFdkaA';
+
+        $.getJSON(url, function(data) {
+            let header = data.values[0]
+            let dataset = data.values.slice(1);
+            for (i = 0; i < dataset.length; i++) {
                 Object.keys(document.configuration.verbes).forEach(key => {
-                    document.configuration.verbes[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
-                    array.push(data.feed.entry[i]['gsx$' + key]['$t']);
+                    document.configuration.verbes[key].push(dataset[i][header.indexOf(key)]);
+                });
+            };
+        });
+            
+
+
+
+        var url = 'https://sheets.googleapis.com/v4/spreadsheets/' +
+        '1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ' + '/values/' + 'dictionnaire' +
+        '?alt=json&key=' + 'AIzaSyDabdJQv6avvQu45x_npIjjx16JooFdkaA';
+        
+        $.getJSON(url, function(data) {
+            let header = data.values[0]
+            let dataset = data.values.slice(1);
+            for (i = 0; i < dataset.length; i++) {
+                Object.keys(document.configuration.dictionnaire).forEach(key => {
+                    document.configuration.dictionnaire[key].push(dataset[i][header.indexOf(key)]);
                 });
             };
         });
 
-        $.getJSON("https://spreadsheets.google.com/feeds/list/1D7Exy65w_DHXYuALQZJg1mayC1mW-x47sxvvWjaUKtQ/16/public/values?alt=json", function(data) {
-            var sheetData = data.feed.entry;
-            var i;
-            for (i = 0; i < sheetData.length; i++) {
-                let array = [];
-                Object.keys(document.configuration.dictionnaire).forEach(key => {
-                    document.configuration.dictionnaire[key].push(data.feed.entry[i]['gsx$' + key]['$t']);
-                    array.push(data.feed.entry[i]['gsx$' + key]['$t']);
-                });
-            };
-        });
 
 
         function filter(data, col, items) {
